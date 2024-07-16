@@ -134,6 +134,10 @@
 	<p><button type="submit">Send</button></p>
 </form>
 
+{% if image_path %}
+<img src="{{ image_path }}" alt="Uploaded Image" style="max-width: 300px; max-height: 300px;">
+{% endif %}
+
 <!--footer start here-->
 <div class="footer">
 	<div class="container">

@@ -1,13 +1,13 @@
 import os
 from django.shortcuts import render
-from fooddetect.settings import BASE_DIR
+from fooddetect.settings import BASE_DIR, MEDIA_ROOT, MEDIA_URL
 from detect.forms import UploadFileForm
 from ultralytics import YOLO
 
 # Create your views here.
 
 def handle_uploaded_file(f):
-    upload_dir = BASE_DIR / 'uploads/'
+    upload_dir = MEDIA_ROOT / 'uploads/'
     if not os.path.exists(upload_dir):
         os.makedirs(upload_dir)
 
@@ -16,20 +16,23 @@ def handle_uploaded_file(f):
             destination.write(chunk)
     
     process_image(f.name)
+    return f.name
 
 def process_image(file_name):
-    upload_dir = BASE_DIR / 'processed/'
+    upload_dir = MEDIA_ROOT / 'processed/'
     if not os.path.exists(upload_dir):
         os.makedirs(upload_dir)
 
     model = YOLO(BASE_DIR / 'models/detect.pt')
-    results = model(BASE_DIR / f'uploads/{file_name}', save=True, project=BASE_DIR / 'processed', exist_ok=True)
+    model(MEDIA_ROOT / f'uploads/{file_name}', save=True, project=MEDIA_ROOT / 'processed', exist_ok=True)
     
 def index(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
-            handle_uploaded_file(form.cleaned_data['file'])
+            image_path = MEDIA_URL + 'processed/predict/' + handle_uploaded_file(form.cleaned_data['file'])
     else:
         form = UploadFileForm()
-    return render(request, 'detect/index.html', {'form': form})
+        image_path = None
+    print(image_path)
+    return render(request, 'detect/index.html', {'form': form, 'image_path': image_path})
