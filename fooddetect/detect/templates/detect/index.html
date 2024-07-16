@@ -138,6 +138,14 @@
 <img src="{{ image_path }}" alt="Uploaded Image" style="max-width: 300px; max-height: 300px;">
 {% endif %}
 
+{% if classes %}
+<ul>
+	{% for c in classes %}
+	<li><a href="#">{{ c }}</a></li>
+	{% endfor %}
+</ul>
+{% endif %}
+
 <!--footer start here-->
 <div class="footer">
 	<div class="container">

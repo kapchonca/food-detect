@@ -24,15 +24,34 @@ def process_image(file_name):
         os.makedirs(upload_dir)
 
     model = YOLO(BASE_DIR / 'models/detect.pt')
-    model(MEDIA_ROOT / f'uploads/{file_name}', save=True, project=MEDIA_ROOT / 'processed', exist_ok=True)
+    model(MEDIA_ROOT / f'uploads/{file_name}', save=True, save_txt=True, project=MEDIA_ROOT / 'processed', exist_ok=True)
+
+def extract_classes(file_name):
+    file_extension = file_name.rfind('.')
+    file_name = file_name[:file_extension] + '.txt'
+    with open(BASE_DIR / 'models' / 'labels.txt') as file_labels:
+        labels = file_labels.read().split('\n')
+
+    if not(os.path.exists(MEDIA_ROOT / 'processed' / 'predict' / 'labels' / file_name)):
+        return {'non-food': ['0', '0', '0', '0']}
+    
+    with open(MEDIA_ROOT / 'processed' / 'predict' / 'labels' / file_name) as file_predictions:
+        classes_raw = file_predictions.read().split('\n')
+    classes_list = [list(i.split(' ')) for i in classes_raw]
+    classes_dict = { i[0] : i[1:] for i in classes_list if i[0]}
+    classes = {labels[int(i)] : classes_dict[i] for i in classes_dict}
+
+    return classes
     
 def index(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
             image_path = MEDIA_URL + 'processed/predict/' + handle_uploaded_file(form.cleaned_data['file'])
+            classes = extract_classes(form.cleaned_data['file'].name)
     else:
         form = UploadFileForm()
         image_path = None
-    print(image_path)
-    return render(request, 'detect/index.html', {'form': form, 'image_path': image_path})
+        classes = None
+        
+    return render(request, 'detect/index.html', {'form': form, 'image_path': image_path, 'classes': classes})
