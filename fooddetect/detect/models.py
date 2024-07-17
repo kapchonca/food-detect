@@ -9,7 +9,7 @@ class Standard(models.Model):
     weight = models.FloatField()
     created_at = models.DateTimeField(auto_now_add=True)
     image = models.ImageField(upload_to='standard/')  # Or use CharField to store path
-    embedding = models.TextField()
+    embedding = models.TextField(blank=True)
 
     def __str__(self):
         return self.class_name
