@@ -163,5 +163,5 @@ cython_debug/
 #.idea/
 
 .vscode/
-*uploads/
-*processed/
+media/
+.pgpass
