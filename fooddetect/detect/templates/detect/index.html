@@ -64,8 +64,9 @@
                         <div class="recognized-classes">
                             <h3>Распознанные классы:</h3>
                             <ul>
-                                {% for c, bbox in classes.items %}
-                                <li>{{ c }}</li>
+                                {% for c in classes %}
+                                <li>{{ c.class_name }} class number: {{ c.class_number }} similarity: {{ c.similarity }} confidence: {{ c.confidence }}</li>
+                                <img src="{{ c.image_path }}" alt="Standard Image">
                                 {% endfor %}
                             </ul>
                         </div>

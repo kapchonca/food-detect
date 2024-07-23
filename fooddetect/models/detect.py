@@ -1,6 +1,19 @@
 import os
 from ultralytics import YOLO
 from fooddetect.settings import BASE_DIR, MEDIA_ROOT
+from dataclasses import dataclass
+from detect.models import Standard
+from models.siamese import compare_img
+
+@dataclass
+class FoodObject:
+    class_name: str = ''
+    class_number: int = 0
+    confidence: float = 0
+    similarity: float = 0
+    temperature: float = 0
+    weight: float = 0
+    image_path: str = ''
 
 def handle_uploaded_file(f):
     upload_dir = MEDIA_ROOT / 'uploads/'
@@ -47,12 +60,34 @@ def process_detections(detections, file_name):
             f.write(f"{class_id} {confidence}")
             f.write("\n")
 
-def extract_classes(file_name):
+def extract_classes_dict(file_name):
     file_name = img_to_txt_filename(file_name)
     
-    with open(MEDIA_ROOT / 'processed' / 'predict' / 'labels' / file_name) as file_predictions:
+    with open(MEDIA_ROOT / 'processed/predict/labels' / file_name) as file_predictions:
         classes_raw = file_predictions.read().split('\n')
     classes_list = [list(i.split(' ')) for i in classes_raw]
-    classes = { i[0] : i[1] for i in classes_list if i[0]}
+    
+    classes = {int(i[0]) : FoodObject(class_number=int(i[0]), confidence=float(i[1])) for i in classes_list if i[0]}
+    classes = { int(i[0]) : float(i[1])for i in classes_list if i[0]}
+
+    return classes
+
+def create_food_objects(uploaded_path):
+    classes_dict = extract_classes_dict(uploaded_path)
+    classes = []
+    
+    if classes_dict:
+        query_set = Standard.objects.filter(class_number__in=classes_dict.keys())
+        for query in query_set:
+            current_class = FoodObject()
+            current_class.class_number = query.class_number
+            current_class.confidence = classes_dict[query.class_number]
+            current_class.class_name = query.class_name
+            current_class.image_path = query.image.url
+            similarity = compare_img(MEDIA_ROOT / 'processed/predict' / uploaded_path, os.path.join(BASE_DIR, query.image.url[1:]))
+            current_class.similarity = similarity
+            classes.append(current_class)    
+    else:
+        classes = [FoodObject(class_name='non-food')]
 
     return classes
