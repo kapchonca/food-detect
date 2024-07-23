@@ -55,6 +55,9 @@ def process_detections(detections, file_name):
             
     file_name = img_to_txt_filename(file_name)
 
+    if not os.path.exists(MEDIA_ROOT / 'processed/predict/labels'):
+        os.makedirs(MEDIA_ROOT / 'processed/predict/labels')
+        
     with open(MEDIA_ROOT / 'processed/predict/labels' / file_name, 'w') as f:
         for class_id, confidence in top_detections.items():
             f.write(f"{class_id} {confidence}")
