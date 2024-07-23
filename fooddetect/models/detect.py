@@ -49,9 +49,6 @@ def process_detections(detections, file_name):
 
 def extract_classes(file_name):
     file_name = img_to_txt_filename(file_name)
-
-    if not(os.path.exists(MEDIA_ROOT / 'processed' / 'predict' / 'labels' / file_name)):
-        return {'non-food': '0'}
     
     with open(MEDIA_ROOT / 'processed' / 'predict' / 'labels' / file_name) as file_predictions:
         classes_raw = file_predictions.read().split('\n')
