@@ -1,103 +1,100 @@
-non-food
-apple pie
-baby back ribs
-baklava
-beef carpaccio
-beef tartare
-beet salad
-beignets
-bread pudding
-breakfast burrito
-bruschetta
-caesar salad
-cannoli
-caprese salad
-carrot cake
-ceviche
-cheese plate
-cheesecake
-chicken curry
-chicken quesadilla
-chicken wings
-chocolate cake
-chocolate mousse
-churros
-clam chowder
-club sandwich
-crab cakes
-creme brulee
-croque madame
-cup cakes
-deviled eggs
-donuts
-dumplings
-edamame
-eggplant
-eggs benedict
-escargots
-falafel
-filet mignon
-fish and chips
-fish
-foie gras
-french fries
-french onion soup
-french toast
-fried calamari
-fried rice
-frozen yogurt
-garlic bread
-gnocchi
-greek salad
-grilled cheese sandwich
-grilled salmon
-guacamole
-gyoza
+Japanese-style-pancake
+Japanese-tofu-and-vegetable-chowder
+beef-bowl
+beef-curry
+beef-noodle
+beef-steak
+bibimbap
+boiled-chicken-and-vegetables
+boiled-fish
+cabbage-roll
+chicken-n-egg-on-rice
+chicken-rice
+chilled-noodle
+chinese-soup
+chip-butty
+cold-tofu
+croissant
+croquette
+cutlet-curry
+dipping-noodles
+dried-fish
+eels-on-rice
+egg-roll
+egg-sunny-side-up
+fermented-soybeans
+fish-shaped-pancake-with-bean-jam
+french-fries
+fried-chicken
+fried-fish
+fried-noodle
+fried-rice
+fried-shrimp
+ganmodoki
+ginger-pork-saute
+goya-chanpuru
+gratin
+green-salad
+grilled-eggplant
+grilled-pacific-saury
+grilled-salmon
+hambarg-steak
 hamburger
-hot and sour soup
-hot dog
-hummus
-ice cream
-koshary
-lasagna
-lentil soup
-lobster bisque
-lobster roll sandwich
-macaroni and cheese
-macarons
-miso soup
-molokhia
-mussels
-nachos
-omelette
-onion rings
-oysters
-pancakes
-panna cotta
-peking duck
+hot-dog
+jiaozi
+kinpira-style-sauteed-burdock
+lightly-roasted-fish
+macaroni-salad
+miso-soup
+mixed-rice
+nanbanzuke
+oden
+omelet
+omelet-with-fried-rice
+pilaf
 pizza
-pork chop
-poutine
-prime rib
-pulled pork sandwich
-ravioli
-red velvet cake
-risotto
-samosa
+pizza-toast
+pork-cutlet-on-rice
+pork-miso-soup
+potage
+potato-salad
+raisin-bread
+ramen-noodle
+rice
+rice-ball
+roast-chicken
+roll-bread
+rolled-omelet
+salmon-meuniere
+sandwiches
 sashimi
-scallops
-seaweed salad
-shrimp and grits
-spaghetti bolognese
-spaghetti carbonara
-spring rolls
-steak
-strawberry shortcake
-stuffed grape leaves
+sashimi-bowl
+sausage
+sauteed-spinach
+sauteed-vegetables
+seasoned-beef-with-potatoes
+shrimp-with-chill-source
+simmered-pork
+sirloin-cutlet
+soba-noodle
+spaghetti
+spaghetti-meat-sauce
+spicy-chili-flavored-tofu
+steamed-egg-hotchpotch
+steamed-meat-dumpling
+stew
+stir-fried-beef-and-peppers
+sukiyaki
 sushi
-sweet potato
-tacos
+sushi-bowl
+sweet-and-sour-pork
 takoyaki
-tiramisu
-tuna tartare
-waffles
+tempura
+tempura-bowl
+tempura-udon
+tensin-noodle
+teriyaki-grilled-fish
+toast
+udon-noodle
+vegetable-tempura
+yakitori
