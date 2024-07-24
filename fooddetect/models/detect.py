@@ -37,43 +37,17 @@ def process_image(file_name):
         os.makedirs(upload_dir)
 
     model = YOLO(BASE_DIR / 'models/detect.pt')
-    detections = model(MEDIA_ROOT / f'uploads/{file_name}', save=True, project=MEDIA_ROOT / 'processed', exist_ok=True, conf=0.01)
-    process_detections(detections, file_name)
+    results = model.predict(MEDIA_ROOT / f'uploads/{file_name}', save=True, project=MEDIA_ROOT / 'processed', exist_ok=True)
+    return results[0]
 
-def process_detections(detections, file_name):
-    top_detections = {}
+def extract_classes_dict(uploaded_path):
+    result = process_image(uploaded_path)
 
-    for detection in detections:
-        for box in detection.boxes:
-            class_id = int(box.cls)
-            confidence = float(box.conf)
+    class_numbers = result.probs.top5
+    confidences = result.probs.top5conf
+    classes_dict = {int(class_numbers[i]) : int(confidences[i].item()) for i in range(3)}
 
-            if class_id not in top_detections:
-                top_detections[class_id] = 0
-
-            top_detections[class_id] = max(confidence, top_detections[class_id])
-            
-    file_name = img_to_txt_filename(file_name)
-
-    if not os.path.exists(MEDIA_ROOT / 'processed/predict/labels'):
-        os.makedirs(MEDIA_ROOT / 'processed/predict/labels')
-        
-    with open(MEDIA_ROOT / 'processed/predict/labels' / file_name, 'w') as f:
-        for class_id, confidence in top_detections.items():
-            f.write(f"{class_id} {confidence}")
-            f.write("\n")
-
-def extract_classes_dict(file_name):
-    file_name = img_to_txt_filename(file_name)
-    
-    with open(MEDIA_ROOT / 'processed/predict/labels' / file_name) as file_predictions:
-        classes_raw = file_predictions.read().split('\n')
-    classes_list = [list(i.split(' ')) for i in classes_raw]
-    
-    classes = {int(i[0]) : FoodObject(class_number=int(i[0]), confidence=float(i[1])) for i in classes_list if i[0]}
-    classes = { int(i[0]) : float(i[1])for i in classes_list if i[0]}
-
-    return classes
+    return classes_dict
 
 def create_food_objects(uploaded_path):
     classes_dict = extract_classes_dict(uploaded_path)
