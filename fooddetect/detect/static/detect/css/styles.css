@@ -320,7 +320,6 @@ form button[type="submit"]:hover {
     transform: scale(1.05);
 }
 
-/* Results Container */
 .results-container {
     margin-top: 0;
     display: flex;
@@ -410,7 +409,6 @@ form button[type="submit"]:hover {
     font-size: 2vw; 
 }
 
-/* Details Container */
 .details-container {
     display: grid;
     grid-template-columns: 1fr 1fr; 
@@ -422,7 +420,6 @@ form button[type="submit"]:hover {
     box-sizing: border-box;
 }
 
-/* Left Column */
 .details-cell:first-child {
     display: flex;
     justify-content: center;
@@ -438,7 +435,6 @@ form button[type="submit"]:hover {
     font-size: 18px;
 }
 
-/* Right Column */
 .details-cell:last-child {
     display: flex;
     flex-direction: column; 
@@ -449,7 +445,6 @@ form button[type="submit"]:hover {
     overflow: hidden;
 }
 
-/* Details Blocks */
 .class-details {
     background: #f9f9f9; 
     border-radius: 10px;
@@ -484,7 +479,7 @@ form button[type="submit"]:hover {
 
 
 
-/* style.css */
+/* Типо окно */
 .all-classes-container {
     display: flex;
     flex-direction: column;

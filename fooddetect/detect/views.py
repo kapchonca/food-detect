@@ -22,7 +22,14 @@ def index(request):
 
     return render(request, 'detect/index.html', {'form': form, 'image_path': image_path, 'classes': classes})
 
-def class_details(request, class_id):
+def all_classes(request):
+    all_classes = Standard.objects.all()
+    return render(request, 'detect/all_classes.html', {'all_classes': all_classes})
+
+def class_details(request, class_id=None):
+    if class_id is None:
+        return render(request, 'detect/all_classes.html', {'all_classes': Standard.objects.all()})
+
     query = Standard.objects.get(class_number=class_id)
     image_rez = request.session.get('image_path', '')
     class_info = {
@@ -30,7 +37,8 @@ def class_details(request, class_id):
         'temperature': query.temperature,
         'weight': query.weight,
         'image_url': query.image.url,
-        'image_path' : image_rez
+        'image_path': image_rez
+        
     }
 
     return render(request, 'detect/class_details.html', {'class_info': class_info})

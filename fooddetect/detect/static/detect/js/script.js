@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const uploadForm = document.querySelector('.input-file-form');
     const formWrapper = document.querySelector('.form-wrapper');
     const resultsContainer = document.querySelector('.results-container');
+    const otherOption = document.getElementById('other-option');
 
     demoButton.addEventListener('click', function() {
         popup.style.display = 'flex';
@@ -40,13 +41,16 @@ document.addEventListener('DOMContentLoaded', function() {
         if (event.target.classList.contains('class-option')) {
             event.preventDefault();
             const classId = event.target.getAttribute('data-class-id');
-
-            fetch(`/details/${classId}/`)
-            .then(response => response.text())
-            .then(data => {
-                resultsContainer.innerHTML = data;
-            })
-            .catch(error => console.error('Error:', error));
+            if (classId) {
+                fetch(`/details/${classId}/`)
+                .then(response => response.text())
+                .then(data => {
+                    resultsContainer.innerHTML = data;
+                })
+                .catch(error => console.error('Error:', error));
+            } else if (event.target.id === 'other-option') {
+                window.location.href = event.target.getAttribute('href');
+            }
         }
     });
 

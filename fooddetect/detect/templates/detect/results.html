@@ -12,11 +12,14 @@
     <h3>Загруженное изображение:</h3>
     <img src="{{ image_path }}" alt="Uploaded Image">
 </div>
+{% if classes %}
 <div class="recognized-classes">
     <h3>Распознанные классы:</h3>
     <ul>
         {% for c in classes %}
-        <li><a href="#" class="class-option" data-class-id="{{ c.class_number }}">{{ c.class_name }}</a></li>
+            <li><a href="#" class="class-option" data-class-id="{{ c.class_number }}">{{ c.class_name }}</a></li>
         {% endfor %}
+        <li><a href="{% url 'all_classes' %}" class="class-option" id="other-option">Другое...</a></li>
     </ul>
 </div>
+{% endif %}
