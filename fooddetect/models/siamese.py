@@ -4,7 +4,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import PIL.ImageOps
-import numpy as np
+from fooddetect.settings import BASE_DIR
 
 class SiameseNetwork(nn.Module):
     def __init__(self):
@@ -66,7 +66,7 @@ def preprocess_image(image_path, should_invert=True):
 
 def compare_img(loaded_path, reference_path):
 
-    model = load_model('models/compare-reference.pth')
+    model = load_model(BASE_DIR / 'models' / 'compare-reference.pth')
 
     image1 = preprocess_image(loaded_path)
     image2 = preprocess_image(reference_path)
