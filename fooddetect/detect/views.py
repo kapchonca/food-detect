@@ -13,6 +13,7 @@ def index(request):
             raw_path = handle_uploaded_file(form.cleaned_data['file'])
             image_path = os.path.join(MEDIA_URL, 'processed/predict', raw_path)
             classes = create_food_objects(raw_path)
+            classes.sort(key=lambda x: x.confidence, reverse=True)
             request.session['image_path'] = image_path
             return render(request, 'detect/results.html', {'image_path': image_path, 'classes': classes})
     else:

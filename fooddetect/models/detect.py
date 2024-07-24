@@ -45,7 +45,7 @@ def extract_classes_dict(uploaded_path):
 
     class_numbers = result.probs.top5
     confidences = result.probs.top5conf
-    classes_dict = {int(class_numbers[i]) : int(confidences[i].item()) for i in range(3)}
+    classes_dict = {int(class_numbers[i]) : float(confidences[i].item()) for i in range(3)}
 
     return classes_dict
 
