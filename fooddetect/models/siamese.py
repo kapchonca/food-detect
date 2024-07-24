@@ -50,7 +50,8 @@ class SiameseNetwork(nn.Module):
 # Function to load the model
 def load_model(model_path):
     model = SiameseNetwork()
-    model.load_state_dict(torch.load(model_path))
+    #model.load_state_dict(torch.load(model_path))
+    model.load_state_dict(torch.load(model_path, map_location=torch.device('cpu')))
     model.eval()
     return model
 
