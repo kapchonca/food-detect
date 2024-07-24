@@ -1,4 +1,5 @@
 import os
+import pickle
 from django.shortcuts import render
 from django.urls import reverse
 from fooddetect.settings import MEDIA_ROOT, MEDIA_URL, BASE_DIR
@@ -14,6 +15,7 @@ def index(request):
             image_path = os.path.join(MEDIA_URL, 'processed/predict', raw_path)
             classes = create_food_objects(raw_path)
             classes.sort(key=lambda x: x.confidence, reverse=True)
+            request.session['classes'] = pickle.dumps(classes).decode('latin1')
             request.session['image_path'] = image_path
             return render(request, 'detect/results.html', {'image_path': image_path, 'classes': classes})
     else:
@@ -26,12 +28,15 @@ def index(request):
 def class_details(request, class_id):
     query = Standard.objects.get(class_number=class_id)
     image_rez = request.session.get('image_path', '')
+    classes = pickle.loads(request.session.get('classes', '').encode('latin1'))
+    current_class = next(filter(lambda x: x.class_number == class_id, classes))
     class_info = {
         'class_name': query.class_name,
         'temperature': query.temperature,
         'weight': query.weight,
         'image_url': query.image.url,
-        'image_path' : image_rez
+        'image_path' : image_rez,
+        'similarity' : current_class.similarity
     }
 
     return render(request, 'detect/class_details.html', {'class_info': class_info})
