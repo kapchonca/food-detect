@@ -13,7 +13,7 @@
         <div class="main-background">
             <header>
                 <h1>Детекция и распознавание<br>блюд шведской линии</h1>
-                <a href="#form-section" class="demo-link">━━━ ДЕМО</a>
+                <button id="demo-button">━ ДЕМО ━</button>
             </header>
             <section id="features">
                 <table>
@@ -42,22 +42,30 @@
         </div>
         <div class="blue-line"></div>
     </div>
-    <div class="section" id="form-section">
-        <div class="upload-container">
-            <h2>Загрузка фото</h2>
-            <hr>
-            <div class="form-wrapper">
-                <div class="inner-form">
-                    <form action="" method="post" enctype="multipart/form-data" id="upload-form">
+
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <button id="close-popup" class="close-button">&times;</button>
+            <div class="upload-container">
+                <h2>Демо-версия</h2>
+                <hr>
+                <div class="form-wrapper">
+                    <form action="" method="post" enctype="multipart/form-data" class="input-file-form" id="upload-form">
                         {% csrf_token %}
-                        {{ form.as_p }}
+                        <label class="input-file">
+                            {{ form.as_p }}
+                            <span class="input-file-text" type="text"></span>
+                            <input type="file" name="file">        
+                            <span class="input-file-btn">Выберите файл</span>
+                        </label>
                         <button type="submit">Отправить</button>
                     </form>
+
                     <div class="results-container">
                         {% if image_path %}
                         <div class="uploaded-image">
-                            <h3>Загруженное изображение:</h3>
-                            <img src="{{ image_path }}" alt="Uploaded Image">
+                            <h3>Ваше изображение:</h3>
+                            <img src="{{ image_path }}" alt="Ваше изображение">
                         </div>
                         {% endif %}
                         {% if classes %}
@@ -65,8 +73,7 @@
                             <h3>Распознанные классы:</h3>
                             <ul>
                                 {% for c in classes %}
-                                <li>{{ c.class_name }} class number: {{ c.class_number }} similarity: {{ c.similarity }} confidence: {{ c.confidence }}</li>
-                                <img src="{{ c.image_path }}" alt="Standard Image">
+                                <li><a href="#" class="class-option" data-class-id="{{ c.class_number }}">{{ c.class_name }}</a></li>
                                 {% endfor %}
                             </ul>
                         </div>
@@ -76,6 +83,7 @@
             </div>
         </div>
     </div>
+    
     <script src="{% static 'detect/js/script.js' %}"></script>
 </body>
 </html>

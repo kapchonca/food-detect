@@ -2,4 +2,4 @@ from django import forms
 
 
 class UploadFileForm(forms.Form):
-    file = forms.ImageField(label="Your image")
+    file = forms.ImageField(label="")

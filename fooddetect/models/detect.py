@@ -37,7 +37,7 @@ def process_image(file_name):
         os.makedirs(upload_dir)
 
     model = YOLO(BASE_DIR / 'models/detect.pt')
-    detections = model(MEDIA_ROOT / f'uploads/{file_name}', save=True, project=MEDIA_ROOT / 'processed', exist_ok=True, conf=0.1)
+    detections = model(MEDIA_ROOT / f'uploads/{file_name}', save=True, project=MEDIA_ROOT / 'processed', exist_ok=True, conf=0.01)
     process_detections(detections, file_name)
 
 def process_detections(detections, file_name):

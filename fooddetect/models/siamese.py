@@ -50,7 +50,8 @@ class SiameseNetwork(nn.Module):
 # Function to load the model
 def load_model(model_path):
     model = SiameseNetwork()
-    model.load_state_dict(torch.load(model_path))
+    #model.load_state_dict(torch.load(model_path))
+    model.load_state_dict(torch.load(model_path, map_location=torch.device('cpu')))
     model.eval()
     return model
 
@@ -65,7 +66,7 @@ def preprocess_image(image_path, should_invert=True):
 
 def compare_img(loaded_path, reference_path):
 
-    model = load_model('/home/kapchonka/coding/dscs/food-detect/fooddetect/models/compare-reference.pth')
+    model = load_model('models/compare-reference.pth')
 
     image1 = preprocess_image(loaded_path)
     image2 = preprocess_image(reference_path)
