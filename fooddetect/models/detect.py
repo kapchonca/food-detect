@@ -62,7 +62,7 @@ def create_food_objects(uploaded_path):
             current_class.class_name = query.class_name
             current_class.image_path = query.image.url
             similarity = compare_img(MEDIA_ROOT / 'processed/predict' / uploaded_path, os.path.join(BASE_DIR, query.image.url[1:]))
-            current_class.similarity = similarity
+            current_class.similarity = round(similarity, 2)
             classes.append(current_class)    
     else:
         classes = [FoodObject(class_name='non-food')]
