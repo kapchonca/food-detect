@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(data => {
                 resultsContainer.innerHTML = data;
                 uploadForm.style.display = 'none';
+                setConfidenceBars();
             })
             .catch(error => console.error('Error:', error));
     });
@@ -44,6 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     .then(response => response.text())
                     .then(data => {
                         resultsContainer.innerHTML = data;
+                        setConfidenceBars();
                     })
                     .catch(error => console.error('Error:', error));
             } else if (event.target.id === 'other-option') {
@@ -51,6 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     .then(response => response.text())
                     .then(data => {
                         resultsContainer.innerHTML = data;
+                        setConfidenceBars();
                     })
                     .catch(error => console.error('Error:', error));
             }
@@ -63,4 +66,16 @@ document.addEventListener('DOMContentLoaded', function () {
             document.querySelector('.input-file-text').textContent = file.name;
         }
     });
+
+    function setConfidenceBars() {
+        const bars = document.querySelectorAll('.confidence-bar');
+        bars.forEach(bar => {
+            const confidence = bar.getAttribute('data-confidence');
+            const confidencePercent = confidence * 100;
+            console.log(`Confidence: ${confidence}, Percent: ${confidencePercent}%`);
+            bar.style.width = `${confidencePercent}%`;
+        });
+    }
+
+    setConfidenceBars();
 });

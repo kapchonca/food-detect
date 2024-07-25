@@ -163,12 +163,12 @@ table td {
 
 .close-button {
     position: absolute;
-    top: 3px;
-    right: 3px;
+    top: 0px;
+    right: 0px;
     background: none;
     border: none;
-    font-size: 1.5rem;
-    color: #040442;
+    font-size: 1.6rem;
+    color: #4D5BAC;
     cursor: pointer;
 }
 
@@ -232,21 +232,21 @@ table td {
     width: 500px;
     border-radius: 6px;
     background: #C2CCF1;
-    border: 2px dashed #4D5BAC; /* Изменение границы на пунктирную */
+    border: 2px dashed #4D5BAC;
+    /* Изменение границы на пунктирную */
     position: relative;
 }
 
 .input-file-text img {
-    max-width: 80%; /* Размер изображения */
+    max-width: 80%;
     height: auto;
 }
 
 .input-file-text p {
     margin: 10px 0 0;
-    font-size: 1.5rem; /* Размер текста */
+    font-size: 1.5rem;
     color: #2F2F68;
 }
-
 
 .input-file-btn {
     position: relative;
@@ -358,6 +358,21 @@ form button[type="submit"]:hover {
     max-height: 100%;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.confidence-bar-container {
+    width: 100%;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 5px;
+}
+
+.confidence-bar {
+    height: 10px;
+    background-color: #4D5BAC;
+    border-radius: 4px;
+    transition: width 2s;
 }
 
 .recognized-classes {

@@ -19,7 +19,12 @@
         <h3>Распознанные классы:</h3>
         <ul>
             {% for c in classes %}
-            <li><a href="#" class="class-option" data-class-id="{{ c.class_number }}">{{ c.class_name }}</a></li>
+            <li>
+                <a href="#" class="class-option" data-class-id="{{ c.class_number }}">{{ c.class_name }}</a>
+                <div class="confidence-bar-container">
+                    <div class="confidence-bar" data-confidence="{{ c.confidence }}"></div>
+                </div>
+            </li>
             {% endfor %}
             <li><a href="#" class="class-option" id="other-option">Другое...</a></li>
         </ul>
