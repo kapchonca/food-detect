@@ -36,14 +36,24 @@ def class_details(request, class_id):
     query = Standard.objects.get(class_number=class_id)
     image_rez = request.session.get('image_path', '')
     classes = pickle.loads(request.session.get('classes', '').encode('latin1'))
-    current_class = next(filter(lambda x: x.class_number == class_id, classes))
+
+    default_class = {
+        'class_number': class_id,
+        'similarity': '0.12'
+    }
+
+    current_class = next(
+        (cls for cls in classes if cls.class_number == class_id),
+        default_class
+    )
+
     class_info = {
         'class_name': query.class_name,
         'temperature': query.temperature,
         'weight': query.weight,
         'image_url': query.image.url,
-        'image_path' : image_rez,
-        'similarity' : current_class.similarity
+        'image_path': image_rez,
+        'similarity': current_class.get('similarity', '0.12')
     }
 
     return render(request, 'detect/class_details.html', {'class_info': class_info})
