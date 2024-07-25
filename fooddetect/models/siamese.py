@@ -1,3 +1,4 @@
+from fooddetect.settings import BASE_DIR
 import torchvision.transforms as transforms
 from PIL import Image
 import torch

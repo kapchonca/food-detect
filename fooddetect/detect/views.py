@@ -1,10 +1,10 @@
 import os
 from django.shortcuts import render
 from django.urls import reverse
-from fooddetect.settings import MEDIA_ROOT, MEDIA_URL, BASE_DIR
+from fooddetect.settings import MEDIA_URL
 from detect.forms import UploadFileForm
 from detect.models import Standard
-from models.detect import handle_uploaded_file, create_food_objects, FoodObject
+from models.detect import handle_uploaded_file, create_food_objects
 
 def index(request):
     if request.method == 'POST':
@@ -26,7 +26,7 @@ def all_classes(request):
     all_classes = Standard.objects.all()
     return render(request, 'detect/all_classes.html', {'all_classes': all_classes})
 
-def class_details(request, class_id=None):
+def class_details(request, class_id):
     if class_id is None:
         return render(request, 'detect/all_classes.html', {'all_classes': Standard.objects.all()})
 
@@ -37,8 +37,7 @@ def class_details(request, class_id=None):
         'temperature': query.temperature,
         'weight': query.weight,
         'image_url': query.image.url,
-        'image_path': image_rez
-        
+        'image_path': image_rez,
     }
 
     return render(request, 'detect/class_details.html', {'class_info': class_info})
