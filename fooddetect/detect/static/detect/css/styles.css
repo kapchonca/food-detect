@@ -1,4 +1,5 @@
-body, html {
+body,
+html {
     margin: 0;
     padding: 0;
     width: 100%;
@@ -34,10 +35,10 @@ body {
     background: url('../images/main-background.png') no-repeat center center;
     background-size: cover;
     display: flex;
-    flex-direction: column; 
-    align-items: flex-start; 
-    justify-content: center; 
-    padding-left: 3%; 
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding-left: 3%;
     padding-right: 3%;
 }
 
@@ -48,7 +49,7 @@ header {
 
 header h1 {
     margin: 0;
-    font-size: 4vw; 
+    font-size: 4vw;
     text-align: left;
     color: #2F2F68;
 }
@@ -57,7 +58,7 @@ header h1 {
     display: block;
     margin-top: 20px;
     padding: 10px 20px;
-    background-color: #4D5BAC; 
+    background-color: #4D5BAC;
     color: white;
     text-decoration: none;
     font-size: 2vw;
@@ -87,7 +88,7 @@ table {
     width: 100%;
     border-collapse: collapse;
     height: 100%;
-    display: flex; 
+    display: flex;
     justify-content: center;
     align-items: center;
 }
@@ -143,7 +144,6 @@ table td {
     justify-content: center;
 }
 
-/* Popup Content */
 .popup-content {
     display: flex;
     justify-content: center;
@@ -155,7 +155,7 @@ table td {
     text-align: center;
     position: relative;
     margin: auto;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     flex-direction: column;
     max-height: 95%;
     overflow: auto;
@@ -163,16 +163,15 @@ table td {
 
 .close-button {
     position: absolute;
-    top: 3px;
-    right: 3px;
+    top: 0px;
+    right: 0px;
     background: none;
     border: none;
-    font-size: 1.5rem;
-    color: #040442;
+    font-size: 1.6rem;
+    color: #4D5BAC;
     cursor: pointer;
 }
 
-/* Upload Container */
 .upload-container {
     background: white;
     border-radius: 10px;
@@ -185,7 +184,7 @@ table td {
     align-items: center;
     justify-content: center;
     position: relative;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin: 0 auto;
     max-height: 95%;
     overflow: hidden;
@@ -223,14 +222,30 @@ table td {
 .input-file-text {
     padding: 0 10px;
     line-height: 40px;
-    text-align: left;
-    height: 40px;
-    display: block;
-    float: left;
+    text-align: center;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     box-sizing: border-box;
-    width: 200px;
-    border-radius: 6px 0px 0 6px;
-    border: 1px solid #ddd;
+    width: 500px;
+    border-radius: 6px;
+    background: #C2CCF1;
+    border: 2px dashed #4D5BAC;
+    /* Изменение границы на пунктирную */
+    position: relative;
+}
+
+.input-file-text img {
+    max-width: 80%;
+    height: auto;
+}
+
+.input-file-text p {
+    margin: 10px 0 0;
+    font-size: 1.5rem;
+    color: #2F2F68;
 }
 
 .input-file-btn {
@@ -263,19 +278,18 @@ table td {
     height: 0;
 }
 
-.input-file input[type=file]:focus + .input-file-btn {
-    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+.input-file input[type=file]:focus+.input-file-btn {
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
 }
 
 .input-file:hover .input-file-btn {
     background-color: #3a469c;
 }
 
-.input-file input[type=file]:disabled + .input-file-btn {
+.input-file input[type=file]:disabled+.input-file-btn {
     background-color: #eee;
 }
 
-/* Inner Form */
 .inner-form {
     background: white;
     border-radius: 10px;
@@ -287,7 +301,7 @@ table td {
     align-items: center;
     justify-content: center;
     position: relative;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     max-height: 95%;
     overflow: hidden;
 }
@@ -305,22 +319,23 @@ form input[type="file"] {
 }
 
 form button[type="submit"] {
-    margin-top: 5%;
+    margin-top: 15px;
+    margin-bottom: 15px;
     padding: 10px 20px;
-    background-color: #f1f1f1;
-    color: #4D5BAC;
+    background-color: #4D5BAC;
+    color: #ffffff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    width: 250px;
     transition: background-color 0.3s, transform 0.3s;
 }
-    
+
 form button[type="submit"]:hover {
-    background-color: #ced1e4;
+    background-color: #3a469c;
     transform: scale(1.05);
 }
 
-/* Results Container */
 .results-container {
     margin-top: 0;
     display: flex;
@@ -342,7 +357,22 @@ form button[type="submit"]:hover {
     max-width: 100%;
     max-height: 100%;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.confidence-bar-container {
+    width: 100%;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 5px;
+}
+
+.confidence-bar {
+    height: 10px;
+    background-color: #4D5BAC;
+    border-radius: 4px;
+    transition: width 2s;
 }
 
 .recognized-classes {
@@ -362,7 +392,7 @@ form button[type="submit"]:hover {
     margin: 5px 0;
     padding: 10px;
     border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s, transform 0.3s;
 }
 
@@ -382,7 +412,7 @@ form button[type="submit"]:hover {
     max-width: 100%;
     margin-top: 100%;
     border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .recognized-classes a {
@@ -405,30 +435,31 @@ form button[type="submit"]:hover {
     margin: 0 auto;
 }
 
-.uploaded-image h3, .class-details h2, .reference-image-container h3, .recognized-classes h3 {
+.uploaded-image h3,
+.class-details h2,
+.reference-image-container h3,
+.recognized-classes h3 {
     color: #2F2F68;
-    font-size: 2vw; 
+    font-size: 2vw;
 }
 
-/* Details Container */
 .details-container {
     display: grid;
-    grid-template-columns: 1fr 1fr; 
+    grid-template-columns: 1fr 1fr;
     gap: 10px;
     width: 100%;
-    max-width: 100%; 
+    max-width: 100%;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Left Column */
 .details-cell:first-child {
     display: flex;
     justify-content: center;
     align-items: center;
-    max-width: 100%; 
-    max-height: 100%; 
+    max-width: 100%;
+    max-height: 100%;
     overflow: hidden;
 }
 
@@ -438,25 +469,23 @@ form button[type="submit"]:hover {
     font-size: 18px;
 }
 
-/* Right Column */
 .details-cell:last-child {
     display: flex;
-    flex-direction: column; 
-    align-items: flex-start; 
-    gap: 10px; 
-    max-width: 100%; 
-    max-height: 100%; 
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    max-width: 100%;
+    max-height: 100%;
     overflow: hidden;
 }
 
-/* Details Blocks */
 .class-details {
-    background: #f9f9f9; 
+    background: #f9f9f9;
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     max-width: 100%;
-    overflow: hidden; 
+    overflow: hidden;
 }
 
 .class-details h3 {
@@ -480,11 +509,6 @@ form button[type="submit"]:hover {
 
 
 
-
-
-
-
-/* style.css */
 .all-classes-container {
     display: flex;
     flex-direction: column;
@@ -508,7 +532,7 @@ form button[type="submit"]:hover {
     padding: 10px;
     background: #C2CCF1;
     border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s, transform 0.3s;
 }
 

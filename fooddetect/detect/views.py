@@ -2,10 +2,10 @@ import os
 import pickle
 from django.shortcuts import render
 from django.urls import reverse
-from fooddetect.settings import MEDIA_ROOT, MEDIA_URL, BASE_DIR
+from fooddetect.settings import MEDIA_URL
 from detect.forms import UploadFileForm
 from detect.models import Standard
-from models.detect import handle_uploaded_file, create_food_objects, FoodObject
+from models.detect import handle_uploaded_file, create_food_objects
 
 def index(request):
     if request.method == 'POST':
@@ -25,7 +25,14 @@ def index(request):
 
     return render(request, 'detect/index.html', {'form': form, 'image_path': image_path, 'classes': classes})
 
+def all_classes(request):
+    all_classes = Standard.objects.all()
+    return render(request, 'detect/all_classes.html', {'all_classes': all_classes})
+
 def class_details(request, class_id):
+    if class_id is None:
+        return render(request, 'detect/all_classes.html', {'all_classes': Standard.objects.all()})
+
     query = Standard.objects.get(class_number=class_id)
     image_rez = request.session.get('image_path', '')
     classes = pickle.loads(request.session.get('classes', '').encode('latin1'))

@@ -1,12 +1,14 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Детали класса</title>
     <link rel="stylesheet" href="{% static 'detect/css/styles.css' %}">
 </head>
+
 <body>
     <div class="details-container">
         <div class="details-cell">
@@ -20,12 +22,13 @@
                 <h3>Эталонное изображение:</h3>
                 <img src="{{ class_info.image_url }}" alt="{{ class_info.class_name }}" class="reference-image">
                 <h3>Характеристики:</h3>
-                <p>Схожесть: {{ class_info.similarity}}</p>
                 <p>Название класса: {{ class_info.class_name }}</p>
+                <p>Схожесть: {{ class_info.similarity }}</p>
                 <p>Температура: {{ class_info.temperature }}</p>
                 <p>Вес: {{ class_info.weight }}</p>
             </div>
         </div>
     </div>
 </body>
+
 </html>

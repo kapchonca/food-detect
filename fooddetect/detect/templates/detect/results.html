@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,15 +9,28 @@
     <link rel="stylesheet" href="{% static 'detect/css/styles.css' %}">
 </head>
 
-<div class="uploaded-image">
-    <h3>Загруженное изображение:</h3>
-    <img src="{{ image_path }}" alt="Uploaded Image">
-</div>
-<div class="recognized-classes">
-    <h3>Распознанные классы:</h3>
-    <ul>
-        {% for c in classes %}
-        <li><a href="#" class="class-option" data-class-id="{{ c.class_number }}">{{ c.class_name }}</a></li>
-        {% endfor %}
-    </ul>
-</div>
+<body>
+    <div class="uploaded-image">
+        <h3>Загруженное изображение:</h3>
+        <img src="{{ image_path }}" alt="Uploaded Image">
+    </div>
+    {% if classes %}
+    <div class="recognized-classes">
+        <h3>Распознанные классы:</h3>
+        <ul>
+            {% for c in classes %}
+            <li>
+                <a href="#" class="class-option" data-class-id="{{ c.class_number }}">{{ c.class_name }}</a>
+                <div class="confidence-bar-container">
+                    <div class="confidence-bar" data-confidence="{{ c.confidence }}"></div>
+                </div>
+            </li>
+            {% endfor %}
+            <li><a href="#" class="class-option" id="other-option">Другое...</a></li>
+        </ul>
+    </div>
+    {% endif %}
+    <script src="{% static 'detect/js/script.js' %}"></script>
+</body>
+
+</html>
