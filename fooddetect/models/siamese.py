@@ -5,7 +5,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import PIL.ImageOps
-import numpy as np
+from fooddetect.settings import BASE_DIR
 
 class SiameseNetwork(nn.Module):
     def __init__(self):
