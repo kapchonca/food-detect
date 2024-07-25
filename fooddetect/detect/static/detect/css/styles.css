@@ -217,21 +217,36 @@ table td {
 .input-file {
     position: relative;
     display: inline-block;
-    height: 25%;
 }
 
 .input-file-text {
     padding: 0 10px;
     line-height: 40px;
-    text-align: left;
-    height: 100px;
-    display: block;
-    float: left;
+    text-align: center;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     box-sizing: border-box;
-    width: 200px;
-    border-radius: 6px 0px 0 6px;
-    border: 1px solid #ddd;
+    width: 500px;
+    border-radius: 6px;
+    background: #C2CCF1;
+    border: 2px dashed #4D5BAC; /* Изменение границы на пунктирную */
+    position: relative;
 }
+
+.input-file-text img {
+    max-width: 80%; /* Размер изображения */
+    height: auto;
+}
+
+.input-file-text p {
+    margin: 10px 0 0;
+    font-size: 1.5rem; /* Размер текста */
+    color: #2F2F68;
+}
+
 
 .input-file-btn {
     position: relative;
@@ -304,18 +319,20 @@ form input[type="file"] {
 }
 
 form button[type="submit"] {
-    margin-top: 5%;
+    margin-top: 15px;
+    margin-bottom: 15px;
     padding: 10px 20px;
-    background-color: #f1f1f1;
-    color: #4D5BAC;
+    background-color: #4D5BAC;
+    color: #ffffff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    width: 250px;
     transition: background-color 0.3s, transform 0.3s;
 }
 
 form button[type="submit"]:hover {
-    background-color: #ced1e4;
+    background-color: #3a469c;
     transform: scale(1.05);
 }
 
