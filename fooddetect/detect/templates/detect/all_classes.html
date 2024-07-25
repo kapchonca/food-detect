@@ -11,12 +11,13 @@
 
 <body>
     <div class="all-classes-container">
-        <h2>Все классы</h2>
-        <ul>
-            {% for c in all_classes %}
-            <li><a href="#" class="class-option" data-class-id="{{ c.class_number }}">{{ c.class_name }}</a></li>
-            {% endfor %}
-        </ul>
+        <div class="scrollable-classes">
+            <ul>
+                {% for c in all_classes %}
+                <li><a href="#" class="class-option" data-class-id="{{ c.class_number }}">{{ c.class_name }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
 </body>
 
