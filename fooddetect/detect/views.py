@@ -5,7 +5,7 @@ from django.urls import reverse
 from fooddetect.settings import MEDIA_URL
 from detect.forms import UploadFileForm
 from detect.models import Standard
-from models.detect import handle_uploaded_file, create_food_objects
+from models.detect import handle_uploaded_file, create_food_objects, FoodObject
 
 def index(request):
     if request.method == 'POST':
@@ -36,11 +36,8 @@ def class_details(request, class_id):
     query = Standard.objects.get(class_number=class_id)
     image_rez = request.session.get('image_path', '')
     classes = pickle.loads(request.session.get('classes', '').encode('latin1'))
-
-    default_class = {
-        'class_number': class_id,
-        'similarity': '0.12'
-    }
+    
+    default_class = FoodObject(class_number=class_id, similarity=0.12)
 
     current_class = next(
         (cls for cls in classes if cls.class_number == class_id),
@@ -53,7 +50,7 @@ def class_details(request, class_id):
         'weight': query.weight,
         'image_url': query.image.url,
         'image_path': image_rez,
-        'similarity': current_class.get('similarity', '0.12')
+        'similarity': current_class.similarity
     }
 
     return render(request, 'detect/class_details.html', {'class_info': class_info})
