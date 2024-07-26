@@ -34,7 +34,7 @@ def class_details(request, class_id):
     query = Standard.objects.get(class_number=class_id)
     image_rez = request.session.get('image_path', '')
     
-    similarity = compare_img(BASE_DIR / image_rez[1:], os.path.join(BASE_DIR, query.image.url[1:])) # [1:] removes slash in front of the relative path
+    similarity = compare_img(BASE_DIR / image_rez[1:], query.class_name) # [1:] removes slash in front of the relative path
 
     class_info = {
         'class_name': query.class_name,
