@@ -1,79 +1,40 @@
-from fooddetect.settings import BASE_DIR
-import torchvision.transforms as transforms
-from PIL import Image
+import numpy as np
 import torch
-import torch.nn as nn
-import torch.nn.functional as F
-import PIL.ImageOps
+import torchvision.transforms as transforms
+from torchvision.models import resnet50, ResNet50_Weights
+from PIL import Image
 from fooddetect.settings import BASE_DIR
 
-class SiameseNetwork(nn.Module):
-    def __init__(self):
-        super(SiameseNetwork, self).__init__()
-        self.cnn1 = nn.Sequential(
-            nn.ReflectionPad2d(1),
-            nn.Conv2d(1, 4, kernel_size=3),
-            nn.ReLU(inplace=True),
-            nn.BatchNorm2d(4),
-            
-            nn.ReflectionPad2d(1),
-            nn.Conv2d(4, 8, kernel_size=3),
-            nn.ReLU(inplace=True),
-            nn.BatchNorm2d(8),
+def preprocess_image(image_path):
+    transform = transforms.Compose([
+        transforms.Resize((224, 224)),
+        transforms.ToTensor(),
+        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+    ])
+    image = Image.open(image_path).convert('RGB')
+    image = transform(image).unsqueeze(0)
+    return image
 
-            nn.ReflectionPad2d(1),
-            nn.Conv2d(8, 8, kernel_size=3),
-            nn.ReLU(inplace=True),
-            nn.BatchNorm2d(8),
-        )
-
-        self.fc1 = nn.Sequential(
-            nn.Linear(8*100*100, 500),
-            nn.ReLU(inplace=True),
-
-            nn.Linear(500, 500),
-            nn.ReLU(inplace=True),
-
-            nn.Linear(500, 5)
-        )
-
-    def forward_once(self, x):
-        output = self.cnn1(x)
-        output = output.view(output.size()[0], -1)
-        output = self.fc1(output)
-        return output
-
-    def forward(self, input1, input2):
-        output1 = self.forward_once(input1)
-        output2 = self.forward_once(input2)
-        return output1, output2
-
-# Function to load the model
-def load_model(model_path):
-    model = SiameseNetwork()
-    #model.load_state_dict(torch.load(model_path))
-    model.load_state_dict(torch.load(model_path, map_location=torch.device('cpu')))
-    model.eval()
-    return model
-
-# Function to preprocess the images
-def preprocess_image(image_path, should_invert=True):
-    transform = transforms.Compose([transforms.Resize((100, 100)), transforms.ToTensor()])
-    image = Image.open(image_path).convert("L")
-    if should_invert:
-        image = PIL.ImageOps.invert(image)
-    image = transform(image)
-    return image.unsqueeze(0)
+def get_features(image_tensor, model):
+    with torch.no_grad():
+        features = model(image_tensor)
+    return features.squeeze().numpy()
 
 def compare_img(loaded_path, reference_path):
 
-    model = load_model(BASE_DIR / 'models' / 'compare-reference.pth')
+    model = resnet50(weights=ResNet50_Weights.IMAGENET1K_V1)
+    num_features = model.fc.in_features
+    model.fc = torch.nn.Linear(num_features, 89)
+    model.load_state_dict(torch.load(BASE_DIR / 'models' / 'compare-reference.pth'))
+    model.eval()
+    
+    image1_tensor = preprocess_image(loaded_path)
+    image2_tensor = preprocess_image(reference_path)
 
-    image1 = preprocess_image(loaded_path)
-    image2 = preprocess_image(reference_path)
+    features1 = get_features(image1_tensor, model)
+    features2 = get_features(image2_tensor, model)
 
-    output1, output2 = model(image1, image2)
-
-    cosine_similarity = F.cosine_similarity(output1, output2)
-    return cosine_similarity.item()
-
+    euclidean_distance = np.linalg.norm(features1 - features2)
+    
+    similarity_percentage = max(0, 100 - euclidean_distance)
+    return round(similarity_percentage, 2)
