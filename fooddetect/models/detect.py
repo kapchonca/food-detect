@@ -3,7 +3,6 @@ from ultralytics import YOLO
 from fooddetect.settings import BASE_DIR, MEDIA_ROOT
 from dataclasses import dataclass
 from detect.models import Standard
-from models.siamese import compare_img
 
 @dataclass
 class FoodObject:
@@ -60,9 +59,6 @@ def create_food_objects(uploaded_path):
             current_class.class_number = query.class_number
             current_class.confidence = classes_dict[query.class_number]
             current_class.class_name = query.class_name
-            current_class.image_path = query.image.url
-            similarity = compare_img(MEDIA_ROOT / 'processed/predict' / uploaded_path, os.path.join(BASE_DIR, query.image.url[1:]))
-            current_class.similarity = round(similarity, 2)
             classes.append(current_class)    
     else:
         classes = [FoodObject(class_name='non-food')]
