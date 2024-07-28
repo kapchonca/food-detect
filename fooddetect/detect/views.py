@@ -3,39 +3,33 @@ from django.shortcuts import render
 from fooddetect.settings import MEDIA_URL, BASE_DIR
 from detect.forms import UploadFileForm
 from detect.models import Standard
-from models.detect import handle_uploaded_file, create_food_objects
-from models.siamese import compare_img
+from models.detect import save_uploaded_file, extract_classes
+from models.siamese import compare_images
 
 
 def index(request):
     if request.method == "POST":
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
-            raw_path = handle_uploaded_file(form.cleaned_data["file"])
-            image_path = os.path.join(MEDIA_URL, "processed/predict", raw_path)
-            classes = create_food_objects(raw_path)
+            file_name = save_uploaded_file(form.cleaned_data["file"])
+            image_path = os.path.join(MEDIA_URL, "processed/predict", file_name)
+            classes = extract_classes(file_name)
             classes.sort(key=lambda x: x.confidence, reverse=True)
             request.session["image_path"] = image_path
-            return render(
-                request,
-                "detect/results.html",
-                {"image_path": image_path, "classes": classes},
-            )
-    else:
-        form = UploadFileForm()
-        image_path = None
-        classes = None
 
-    return render(
-        request,
-        "detect/index.html",
-        {"form": form, "image_path": image_path, "classes": classes},
-    )
+            context = {"image_path": image_path, "classes": classes}
+            return render(request, "detect/results.html", context=context)
+    else:
+        context = {"form": UploadFileForm(), "image_path": None, "classes": None}
+
+    return render(request, "detect/index.html", context=context)
 
 
 def all_classes(request):
-    all_classes = Standard.objects.all()
-    return render(request, "detect/all_classes.html", {"all_classes": all_classes})
+    all_classes_query = Standard.objects.all()
+    return render(
+        request, "detect/all_classes.html", {"all_classes": all_classes_query}
+    )
 
 
 def class_details(request, class_id):
@@ -45,10 +39,10 @@ def class_details(request, class_id):
         )
 
     query = Standard.objects.get(class_number=class_id)
-    image_rez = request.session.get("image_path", "")
+    image_path = request.session.get("image_path", "")
 
-    similarity = compare_img(
-        BASE_DIR / image_rez[1:], query.class_name
+    similarity = compare_images(
+        BASE_DIR / image_path[1:], query.class_name
     )  # [1:] removes slash in front of the relative path
 
     class_info = {
@@ -56,7 +50,7 @@ def class_details(request, class_id):
         "temperature": query.temperature,
         "weight": query.weight,
         "image_url": query.image.url,
-        "image_path": image_rez,
+        "image_path": image_path,
         "similarity": similarity,
     }
 
