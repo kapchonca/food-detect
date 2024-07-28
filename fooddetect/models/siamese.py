@@ -8,6 +8,16 @@ from detect.models import Standard
 
 
 def preprocess_image(image_path: str) -> torch.Tensor:
+    """
+    Preprocesses the input image for the siamese model.
+
+    Args:
+        image_path: The path to the image file.
+
+    Returns:
+        A tensor representing the preprocessed image.
+    """
+
     transform = transforms.Compose(
         [
             transforms.Resize((224, 224)),
@@ -21,12 +31,33 @@ def preprocess_image(image_path: str) -> torch.Tensor:
 
 
 def get_features(image_tensor: torch.Tensor, model: torch.nn.Module):
+    """
+    Extracts features from the image tensor using the given model.
+
+    Args:
+        image_tensor: A tensor representing the preprocessed image.
+        model: The model used to extract features.
+
+    Returns:
+        A numpy array containing the extracted features.
+    """
+
     with torch.no_grad():
         features = model(image_tensor)
     return features.squeeze().numpy()
 
 
 def load_model(model_path: str) -> torch.nn.Module:
+    """
+    Loads the model with custom weights.
+
+    Args:
+        model_path: The path to the model weights file.
+
+    Returns:
+        The loaded model.
+    """
+
     model = resnet50(weights=ResNet50_Weights.IMAGENET1K_V1)
     num_features = model.fc.in_features
     model.fc = torch.nn.Linear(num_features, 89)
@@ -36,11 +67,32 @@ def load_model(model_path: str) -> torch.nn.Module:
 
 
 def calculate_similarity(features1: np.ndarray, features2: np.ndarray) -> float:
+    """
+    Calculates the similarity between two sets of features using Euclidean distance.
+
+    Args:
+        features1: The first set of features.
+        features2: The second set of features.
+
+    Returns:
+        The similarity percentage between the two feature sets.
+    """
+
     euclidean_distance = np.linalg.norm(features1 - features2)
     return round(max(0, 100 - euclidean_distance), 2)
 
 
 def compare_images(loaded_path: str, reference_name: str) -> float:
+    """
+    Compares the extracted features of a loaded image with the features of a reference image.
+
+    Args:
+        loaded_path: The path to the loaded image file.
+        reference_name: The name of the reference class.
+
+    Returns:
+        The similarity percentage between the loaded image and the reference image.
+    """
 
     model = load_model(BASE_DIR / "models" / "compare-reference.pth")
 
