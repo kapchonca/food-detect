@@ -14,7 +14,6 @@
         <h3>Загруженное изображение:</h3>
         <img src="{{ image_path }}" alt="Uploaded Image">
     </div>
-    {% if classes %}
     <div class="recognized-classes">
         <h3>Распознанные классы:</h3>
         <ul>
@@ -29,7 +28,6 @@
             <li><a href="#" class="class-option" id="other-option">Другое...</a></li>
         </ul>
     </div>
-    {% endif %}
     <script src="{% static 'detect/js/script.js' %}"></script>
 </body>
 

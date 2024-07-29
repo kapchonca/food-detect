@@ -554,7 +554,7 @@ form button[type="submit"]:hover {
 }
 
 .scrollable-classes::-webkit-scrollbar {
-    width: 10px;
+    display: none;
 }
 
 .scrollable-classes::-webkit-scrollbar-thumb {
