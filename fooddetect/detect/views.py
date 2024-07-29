@@ -12,7 +12,7 @@ def index(request):
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
             file_name = save_uploaded_file(form.cleaned_data["file"])
-            image_path = os.path.join(MEDIA_URL, "processed/predict", file_name)
+            image_path = os.path.join(MEDIA_URL, "uploads", file_name)
             classes = extract_classes(file_name)
             classes.sort(key=lambda x: x.confidence, reverse=True)
             request.session["image_path"] = image_path
