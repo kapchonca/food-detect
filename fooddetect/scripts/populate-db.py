@@ -91,5 +91,5 @@ def populate_database(root_folder):
 
 
 def run():
-    root_folder = BASE_DIR / "db-test-data"
+    root_folder = BASE_DIR / "db-test-data" / "standards"
     populate_database(root_folder)
