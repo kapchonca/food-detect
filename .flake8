@@ -1,0 +1,13 @@
+[flake8]
+max-line-length = 100
+exclude =
+    migrations,
+    __pycache__,
+    manage.py,
+    settings.py,
+    urls.py,
+    wsgi.py,
+    asgi.py,
+    tests.py,
+    venv,
+    djenv
