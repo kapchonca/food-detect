@@ -11,13 +11,6 @@ DB_NAME=$1
 DB_USER=$2
 DB_PASS=$3
 
-# Create and activate virtual environment
-python3 -m venv venv
-source venv/bin/activate
-
-# Install dependencies
-pip install -r requirements.txt
-
 # Run psql in terminal to set up the project database
 sudo -u postgres psql -c "CREATE DATABASE $DB_NAME;"
 sudo -u postgres psql -c "CREATE USER $DB_USER WITH PASSWORD '$DB_PASS';"

@@ -72,7 +72,10 @@ def populate_database(root_folder):
             num_features = model.fc.in_features
             model.fc = torch.nn.Linear(num_features, 89)
             model.load_state_dict(
-                torch.load(BASE_DIR / "models" / "compare-reference.pth")
+                torch.load(
+                    BASE_DIR / "models" / "compare-reference.pth",
+                    map_location=torch.device("cpu"),
+                )
             )
             model.eval()
             image_tensor = preprocess_image(image_path)
