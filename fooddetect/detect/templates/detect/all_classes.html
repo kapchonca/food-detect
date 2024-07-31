@@ -10,15 +10,26 @@
 </head>
 
 <body>
-    <div class="all-classes-container">
-        <div class="scrollable-classes">
-            <ul>
-                {% for c in all_classes %}
-                <li><a href="#" class="class-option" data-class-id="{{ c.class_number }}">{{ c.class_name }}</a></li>
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
+    <table class="form-table">
+        <tr>
+            <td class="scrollable-classes">
+                <div class="all-classes-container">
+                    <div class="scrollable-classes">
+                        <ul>
+                            {% for c in all_classes %}
+                            <li><a href="#" class="class-option" data-class-id="{{ c.class_number }}">{{ c.class_name }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="form-footer">
+                <a href="{% url 'index' %}" class="button">Назад на главный экран</a>
+            </td>
+        </tr>
+    </table>
 </body>
 
 </html>
