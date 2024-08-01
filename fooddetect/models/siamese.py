@@ -61,7 +61,7 @@ def load_model(model_path: str) -> torch.nn.Module:
     model = resnet50(weights=ResNet50_Weights.IMAGENET1K_V1)
     num_features = model.fc.in_features
     model.fc = torch.nn.Linear(num_features, 89)
-    model.load_state_dict(torch.load(model_path))
+    model.load_state_dict(torch.load(model_path, map_location=torch.device("cpu")))
     model.eval()
     return model
 
