@@ -10,25 +10,33 @@
 </head>
 
 <body>
-    <div class="uploaded-image">
-        <h3>Загруженное изображение:</h3>
-        <img src="{{ image_path }}" alt="Uploaded Image">
-    </div>
-    <div class="recognized-classes">
-        <h3>Распознанные классы:</h3>
-        <ul>
-            {% for c in classes %}
-            <li>
-                <a href="#" class="class-option" data-class-id="{{ c.class_number }}">{{ c.class_name }}</a>
-                <div class="confidence-bar-container">
-                    <div class="confidence-bar" data-confidence="{{ c.confidence }}"></div>
-                </div>
-            </li>
-            {% endfor %}
-            <li><a href="#" class="class-option" id="other-option">Другое...</a></li>
-        </ul>
-    </div>
-    <script src="{% static 'detect/js/script.js' %}"></script>
+    <table class="form-table">
+        <tr>
+            <td class="uploaded-image">
+                <h3>Загруженное изображение:</h3>
+                <img src="{{ image_path }}" alt="Uploaded Image">
+            </td>
+            <td class="recognized-classes">
+                <h3>Распознанные классы:</h3>
+                <ul>
+                    {% for c in classes %}
+                    <li>
+                        <a href="#" class="class-option" data-class-id="{{ c.class_number }}">{{ c.class_name }}</a>
+                        <div class="confidence-bar-container">
+                            <div class="confidence-bar" data-confidence="{{ c.confidence }}"></div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                    <li><a href="#" class="class-option" id="other-option">Другое...</a></li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td class="form-footer" colspan="2">
+                <a href="{% url 'index' %}" class="button">Назад на главный экран</a>
+            </td>
+        </tr>
+    </table>
 </body>
 
 </html>

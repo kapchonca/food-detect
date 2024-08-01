@@ -10,25 +10,36 @@
 </head>
 
 <body>
-    <div class="details-container">
-        <div class="details-cell">
-            <div class="class-details">
-                <h3>Загруженное изображение:</h3>
-                <img src="{{ class_info.image_path }}" class="reference-image">
-            </div>
-        </div>
-        <div class="details-cell">
-            <div class="class-details">
-                <h3>Эталонное изображение:</h3>
-                <img src="{{ class_info.image_url }}" alt="{{ class_info.class_name }}" class="reference-image">
-                <h3>Характеристики:</h3>
-                <p>Название класса: {{ class_info.class_name }}</p>
-                <p>Схожесть: {{ class_info.similarity }}</p>
-                <p>Температура: {{ class_info.temperature }}</p>
-                <p>Вес: {{ class_info.weight }}</p>
-            </div>
-        </div>
-    </div>
+    <table class="form-table">
+        <tr>
+            <td class="details-cell">
+                <div class="details-container">
+                    <div class="details-cell">
+                        <div class="class-details">
+                            <h3>Загруженное изображение:</h3>
+                            <img src="{{ class_info.image_path }}" class="reference-image">
+                        </div>
+                    </div>
+                    <div class="details-cell">
+                        <div class="class-details">
+                            <h3>Эталонное изображение:</h3>
+                            <img src="{{ class_info.image_url }}" alt="{{ class_info.class_name }}" class="reference-image">
+                            <h3>Характеристики:</h3>
+                            <p>Название класса: {{ class_info.class_name }}</p>
+                            <p>Схожесть: {{ class_info.similarity }}</p>
+                            <p>Температура: {{ class_info.temperature }}</p>
+                            <p>Вес: {{ class_info.weight }}</p>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="form-footer" colspan="2">
+                <a href="{% url 'index' %}" class="button">Назад на главный экран</a>
+            </td>
+        </tr>
+    </table>
 </body>
 
 </html>
