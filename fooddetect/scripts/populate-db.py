@@ -9,7 +9,16 @@ from detect.models import Standard
 from fooddetect.settings import BASE_DIR
 
 
-def preprocess_image(image_path):
+def preprocess_image(image_path: str) -> torch.Tensor:
+    """
+    Preprocess the input image by resizing, normalizing, and converting it to a tensor.
+
+    Args:
+        image_path (str): Path to the input image.
+
+    Returns:
+        torch.Tensor: Preprocessed image tensor.
+    """
     transform = transforms.Compose(
         [
             transforms.Resize((224, 224)),
@@ -22,18 +31,44 @@ def preprocess_image(image_path):
     return image
 
 
-def get_features(image_tensor, model):
+def get_features(image_tensor: torch.Tensor, model: torch.nn.Module):
+    """
+    Extract features from the image tensor using the specified model.
+
+    Args:
+        image_tensor (torch.Tensor): Preprocessed image tensor.
+        model (torch.nn.Module): Pretrained model to extract features.
+
+    Returns:
+        numpy.ndarray: Extracted features as a numpy array.
+    """
     with torch.no_grad():
         features = model(image_tensor)
     return features.squeeze().numpy()
 
 
-def ensure_directory_exists(directory):
+def ensure_directory_exists(directory: str) -> None:
+    """
+    Ensure that the specified directory exists, creating it if necessary.
+
+    Args:
+        directory (str): Path to the directory.
+    """
     if not os.path.exists(directory):
         os.makedirs(directory)
 
 
-def copy_image_to_media(image_path, target_directory):
+def copy_image_to_media(image_path: str, target_directory: str) -> str:
+    """
+    Copy the image to the target directory, creating the directory if it doesn't exist.
+
+    Args:
+        image_path (str): Path to the source image.
+        target_directory (str): Path to the target directory.
+
+    Returns:
+        str: Path to the copied image in the target directory.
+    """
     ensure_directory_exists(target_directory)
     base_name = os.path.basename(image_path)
     target_path = os.path.join(target_directory, base_name)
@@ -41,7 +76,13 @@ def copy_image_to_media(image_path, target_directory):
     return target_path
 
 
-def populate_database(root_folder):
+def populate_database(root_folder: str) -> None:
+    """
+    Populate the database with images and their corresponding metadata.
+
+    Args:
+        root_folder (str): Root folder containing class subfolders with images.
+    """
     media_folder = os.path.join("media", "standard")
 
     class_folders = [
@@ -93,6 +134,9 @@ def populate_database(root_folder):
             print(f"Added data for class {class_folder} with image {new_image_path}")
 
 
-def run():
+def run() -> None:
+    """
+    Run the process to populate the database with test data.
+    """
     root_folder = BASE_DIR / "db-test-data" / "standards"
     populate_database(root_folder)
