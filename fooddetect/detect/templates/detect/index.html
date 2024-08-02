@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Детекция и распознавание блюд</title>
+    <link rel="stylesheet" href="{% static 'detect/css/styles.css' %}">
+</head>
+
+<body>
+    <div class="section" id="top-section">
+        <div class="top-background"></div>
+        <div class="main-background">
+            <header>
+                <h1>Детекция и распознавание<br>блюд шведской линии</h1>
+                <button id="demo-button">━ ДЕМО ━</button>
+            </header>
+            <section id="features">
+                <table>
+                    <tr>
+                        <td>
+                            <div class="feature">
+                                <img src="{% static 'detect/images/icon-recognition.png' %}"
+                                    alt="Распознавание блюда на фото">
+                                <p>Распознавание блюда на фото</p>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="feature">
+                                <img src="{% static 'detect/images/icon-choice.png' %}"
+                                    alt="Выбор правильного варианта">
+                                <p>Выбор правильного варианта</p>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="feature">
+                                <img src="{% static 'detect/images/icon-comparison.png' %}"
+                                    alt="Сравнение с эталонным вариантом">
+                                <p>Сравнение с эталонным вариантом</p>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </section>
+        </div>
+        <div class="blue-line"></div>
+    </div>
+
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <button id="close-popup" class="close-button">&times;</button>
+            <div class="upload-container">
+                <h2>Демо-версия</h2>
+                <hr>
+                <div class="form-wrapper">
+                    <form action="" method="post" enctype="multipart/form-data" class="input-file-form"
+                        id="upload-form">
+                        {% csrf_token %}
+                        <label class="input-file">
+                            {{ form.as_p }}
+                            <span class="input-file-text" type="text">
+                                <img src="{% static 'detect/images/upload-icon.png' %}" alt="Иконка загрузки">
+                                <p>Выберите ваш файл</p>
+                            </span>
+                            <input type="file" name="file">
+                        </label>
+                        <button type="submit">Отправить</button>
+                    </form>
+                    <div class="results-container">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'detect/js/script.js' %}"></script>
+</body>
+
+</html>
